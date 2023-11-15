@@ -9,7 +9,7 @@ rice_types = {
     'super': {'buy': ['dec', 'jan', 'feb', 'mar'],
               'pay': ['mar', 'apr', 'may', 'june', 'jul', 'aug'],
               'sell': ['feb', 'mar', 'apr', 'may', 'june', 'jul', 'aug', 'sept', 'oct', 'nov', 'dec_2', 'jan_2', 'feb_2', 'mar_2', 'apr_2']},
-    'kanait': {'buy': ['dec', 'jan', 'feb', 'mar', 'april', 'may'],
+    'kanait': {'buy': ['dec', 'jan', 'feb', 'mar', 'apr', 'may'],
                'pay': ['mar', 'apr', 'may', 'june', 'jul', 'aug', 'sept', 'oct'],
                'sell': ['mar', 'apr', 'may', 'june', 'jul', 'aug', 'sept', 'oct', 'nov', 'dec_2', 'jan_2', 'feb_2', 'mar_2', 'apr_2']},
     'cheap': {'buy': ['sept', 'oct', 'nov'],
@@ -32,7 +32,7 @@ for rices, operations in rice_types.items():
             if operation == 'buy':
                 rice_vars_dict[f"{rices}_{i}"][operation] = {months[i-1]: LpVariable(f"{rices}_{i}_{operation}_{months[i-1]}", upBound=0, cat='Integer')}
             elif operation == 'pay':
-                rice_vars_dict[f"{rices}_{i}"][operation] = LpVariable.dicts(f"{rices}_{i}_{operation}", months[i-1:], upBound=0, cat='Integer')
+                rice_vars_dict[f"{rices}_{i}"][operation] = LpVariable.dicts(f"{rices}_{i}_{operation}", months[i-1:i-1+3], upBound=0, cat='Integer')
             else:
                 rice_vars_dict[f"{rices}_{i}"][operation] = LpVariable.dicts(f"{rices}_{i}_{operation}", months[i-1:], lowBound=0, cat='Integer')
 
@@ -67,13 +67,13 @@ for i in range(len(months)):
          months[i] in rice_vars_dict[r][op]])
 
 for r,profit in zip(rices, sale_profit):
-    maxProfit += rice_vars_dict[f"price_{r}"] == lpSum(
+    maxProfit += -rice_vars_dict[f"price_{r}"] == lpSum(
             [rice_vars_dict[r][op][month] for op in ops[:2] for month in months if
              month in rice_vars_dict[r][op]])
 
 
     maxProfit += lpSum([rice_vars_dict[r]['buy'][month] for month in months if
-                     month in rice_vars_dict[r]['buy']]) == rice_vars_dict[f"price_{r}"]*deposit_perc
+                     month in rice_vars_dict[r]['buy']]) == -rice_vars_dict[f"price_{r}"]*deposit_perc
 
     maxProfit += lpSum([rice_vars_dict[r]['sell'][month] for month in months if
                         month in rice_vars_dict[r]['sell']]) == rice_vars_dict[f"price_{r}"] * profit
@@ -85,5 +85,4 @@ maxProfit.solve(solver)
 
 print("Status:", LpStatus[maxProfit.status])
 for v in maxProfit.variables():
-    if v.varValue > 0:
-        print(v.name, "=", v.varValue)
+    print(v.name, "=", v.varValue)
