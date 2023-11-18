@@ -65,3 +65,9 @@ git clone [repository-url]
 cd [repository-name]
 pip install -r requirements.txt
 ```
+
+Run the model:
+
+```bash
+python main.py
+```
