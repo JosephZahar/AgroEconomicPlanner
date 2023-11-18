@@ -128,6 +128,8 @@ prev = 'None'
 BAR_WIDTH = 0.3
 
 for v in maxProfit.variables():
+    # if v.name.startswith("price"):
+        # print(v.name, "=", v.varValue)
     if v.varValue != 0 and v.name.startswith(("super", 'kanait', 'cheap')) and abs(v.varValue) > 1:
         split_var = v.name.split('_')
         rice = split_var[0].capitalize() + ' ' + split_var[1]

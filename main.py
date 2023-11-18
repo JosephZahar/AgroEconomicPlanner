@@ -133,7 +133,6 @@ def generate_trade_schedule():
     blue = 'rgb(180, 198, 231)'
     orange = 'rgb(248, 202, 173)'
     green = 'rgb(198, 224, 180)'
-    results = []
     results_df = pd.DataFrame()
     annotations = []
     colors = {}
