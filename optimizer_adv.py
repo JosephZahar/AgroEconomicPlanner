@@ -1,6 +1,5 @@
 import pandas as pd
 from pulp import *
-import plotly.graph_objs as go
 import warnings
 import plotly.figure_factory as ff
 import plotly.io as pio
@@ -112,6 +111,7 @@ month_to_num = {'jan': 1,
                 'dec': 12}
 
 print("Status:", LpStatus[maxProfit.status])
+print(f'\n', f'*********> Final Cashflow: {"{:,.0f}".format(pulp.value(maxProfit.objective))} $')
 
 blue ='rgb(180, 198, 231)'
 orange = 'rgb(248, 202, 173)'
@@ -162,7 +162,7 @@ fig = ff.create_gantt(results_df, index_col='Task', colors=colors,
                       group_tasks=False,
                       bar_width=BAR_WIDTH)
 fig['layout']['annotations'] = annotations
-fig.update_layout(yaxis=dict(showticklabels=False), width=1800, height=800, title='Rice Trade Schedule')
+fig.update_layout(yaxis=dict(showticklabels=False), width=1800, height=800, title=f'Rice Trade Schedule --> {"{:,.0f}".format(pulp.value(maxProfit.objective))} $ in one year')
 
 for i,row in shape_df.iterrows():
     fig.add_shape(type='rect',
