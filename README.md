@@ -32,6 +32,7 @@ The Rice Trade Scheduler is a sophisticated Mixed-Integer Dynamic Programming (M
 
 ## Visualization
 The automated visualization component translates the model's output into a clear, graphical Gantt chart. Here is a snippet of the code that generates this visualization:
+
 ![](riceScheduler.png)
 
 ## How It Works
