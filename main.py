@@ -17,7 +17,7 @@ def generate_trade_schedule():
                 print("That's not a valid number! Please try again. \n")
 
     init_investment = get_valid_number("Please enter your initial investment: ")
-    rice_demand = get_valid_number("Please enter the maximum demand: ")
+    rice_supply = get_valid_number("Please enter the maximum rice supply: ")
 
     # Decisions Variables
     # Continuous Variables
@@ -98,7 +98,7 @@ def generate_trade_schedule():
         maxProfit += lpSum([rice_vars_dict[r]['buy'][month] for month in rice_vars_dict[r]['buy']]) == -rice_vars_dict[
             f"price_{r}"] * deposit_perc
 
-        maxProfit += rice_vars_dict[f"price_{r}"] <= rice_demand
+        maxProfit += rice_vars_dict[f"price_{r}"] <= rice_supply
 
         if r.startswith("super"):
             maxProfit += lpSum([rice_vars_dict[r]['sell'][month] for month in rice_vars_dict[r]['sell']]) == \

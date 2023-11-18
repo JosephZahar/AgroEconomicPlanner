@@ -31,7 +31,7 @@ The Rice Trade Scheduler is a sophisticated Mixed-Integer Dynamic Programming (M
 - **Automated Schedule Visualization:** The output of the MIDP model is used to generate a Gantt chart that visualizes the trade schedule.
 
 ## Visualization
-The automated visualization component translates the model's output into a clear, graphical Gantt chart. Here is a snippet of the code that generates this visualization:
+The automated visualization component translates the model's output into a clear, graphical Gantt chart. Here is the output of the model for an initial investment of 300,000$:
 
 ![](riceScheduler.png)
 
