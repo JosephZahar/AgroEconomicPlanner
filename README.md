@@ -28,7 +28,7 @@ The Rice Trade Scheduler is a sophisticated Mixed-Integer Dynamic Programming (M
 - **Dynamic Profit Calculation:** Includes different profit margins for each rice type, reflecting real-world complexities.
 - **Interest Rate Integration:** Accommodates fluctuating interest rates into the payment scheduling.
 - **Optimization Goal:** Aims to maximize the total cash flow by the end of the trading period.
-- **Automated Schedule Visualization:** The output of the MILP model is used to generate a Gantt chart that visualizes the trade schedule.
+- **Automated Schedule Visualization:** The output of the MIDP model is used to generate a Gantt chart that visualizes the trade schedule.
 
 ## Visualization
 The automated visualization component translates the model's output into a clear, graphical Gantt chart. Here is a snippet of the code that generates this visualization:
