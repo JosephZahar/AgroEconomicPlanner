@@ -35,6 +35,7 @@ The automated visualization component translates the model's output into a clear
 
 ![](riceScheduler.png)
 
+
 ## How It Works
 
 The scheduler uses Linear Programming (LP) to maximize profits while adhering to the constraints of trade schedules and initial investments. It includes the following key components:

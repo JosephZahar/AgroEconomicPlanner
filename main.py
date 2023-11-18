@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 
 def generate_trade_schedule():
 
-    def get_valid_number(prompt="Please enter your initial investment: "):
+    def get_valid_number(prompt):
         while True:
             try:
                 user_input = int(input(prompt))
@@ -16,7 +16,8 @@ def generate_trade_schedule():
             except ValueError:
                 print("That's not a valid number! Please try again. \n")
 
-    init_investment = get_valid_number()
+    init_investment = get_valid_number("Please enter your initial investment: ")
+    rice_demand = get_valid_number("Please enter the maximum demand: ")
 
     # Decisions Variables
     # Continuous Variables
@@ -97,6 +98,8 @@ def generate_trade_schedule():
         maxProfit += lpSum([rice_vars_dict[r]['buy'][month] for month in rice_vars_dict[r]['buy']]) == -rice_vars_dict[
             f"price_{r}"] * deposit_perc
 
+        maxProfit += rice_vars_dict[f"price_{r}"] <= rice_demand
+
         if r.startswith("super"):
             maxProfit += lpSum([rice_vars_dict[r]['sell'][month] for month in rice_vars_dict[r]['sell']]) == \
                          rice_vars_dict[
@@ -175,7 +178,7 @@ def generate_trade_schedule():
                           group_tasks=False,
                           bar_width=BAR_WIDTH)
     fig['layout']['annotations'] = annotations
-    fig.update_layout(yaxis=dict(showticklabels=False), width=1800, height=800,
+    fig.update_layout(yaxis=dict(showticklabels=False), width=1800, height=1000,
                       title=f'Rice Trade Schedule --> {"{:,.0f}".format(pulp.value(maxProfit.objective))} $ in one year')
 
     for i, row in shape_df.iterrows():

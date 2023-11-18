@@ -21,6 +21,7 @@ rice_types = {
               'sell': ['oct', 'nov']}
 }
 
+rice_demand = 6500000
 deposit_perc = 0.2
 init_investment = 300000
 super_profit = 1.13
@@ -84,6 +85,8 @@ for r in rices:
 
     maxProfit += lpSum([rice_vars_dict[r]['buy'][month] for month in rice_vars_dict[r]['buy']]) == -rice_vars_dict[
         f"price_{r}"] * deposit_perc
+
+    maxProfit += rice_vars_dict[f"price_{r}"] <= rice_demand
 
     if r.startswith("super"):
         maxProfit += lpSum([rice_vars_dict[r]['sell'][month] for month in rice_vars_dict[r]['sell']]) == rice_vars_dict[
@@ -162,7 +165,7 @@ fig = ff.create_gantt(results_df, index_col='Task', colors=colors,
                       group_tasks=False,
                       bar_width=BAR_WIDTH)
 fig['layout']['annotations'] = annotations
-fig.update_layout(yaxis=dict(showticklabels=False), width=1800, height=800, title=f'Rice Trade Schedule --> {"{:,.0f}".format(pulp.value(maxProfit.objective))} $ in one year')
+fig.update_layout(yaxis=dict(showticklabels=False), width=1800, height=1000, title=f'Rice Trade Schedule --> {"{:,.0f}".format(pulp.value(maxProfit.objective))} $ in one year')
 
 for i,row in shape_df.iterrows():
     fig.add_shape(type='rect',
